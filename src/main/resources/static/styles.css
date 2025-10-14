@@ -1,0 +1,265 @@
+/* Reset simple */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Barra lateral */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100%;
+    background: linear-gradient(to bottom, #000428, #004e92);
+    color: white;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+}
+
+/* Botones del menú */
+.menu-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.menu-btn:hover {
+    background-color: #666;
+}
+
+/* Contenido principal */
+.content {
+    background: linear-gradient(to right, #4b79a1,#283e51);
+    margin-left: 200px;
+    height: 100vh;
+    width: calc(100vw - 200px); /* todo el ancho menos la sidebar */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.inner-content {
+    margin-left: 20px;
+
+}
+.inner-content h1 {
+    text-align: center;
+}
+
+.venta-box {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+}
+
+.venta-tabla {
+    width: calc(100% - 400px);
+    border-collapse: separate; /* Permite bordes redondeados */
+    border-spacing: 0; /* Elimina espacios entre celdas */
+    margin: 20px 200px;
+    background: #f9fafb; /* Fondo suave */
+    border-radius: 12px; /* Bordes redondeados */
+    overflow: hidden; /* Para que los bordes redondeados se apliquen bien */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Celdas */
+.venta-tabla th, .venta-tabla td {
+    padding: 12px 16px;
+    text-align: center;
+}
+
+/* Encabezados */
+.venta-tabla th {
+    background: linear-gradient(to right, #c31432, #240b36);
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Filas */
+.venta-tabla tbody tr {
+    background: #ffffff;
+    transition: all 0.3s ease;
+}
+
+/* Alternar color entre filas */
+.venta-tabla tbody tr:nth-child(even) {
+    background: #f3f4f6;
+}
+
+/* Hover */
+.venta-tabla tbody tr:hover {
+    background: #d1f5d3;
+    transform: scale(1.01); /* Leve aumento al pasar el mouse */
+    cursor: pointer;
+}
+
+/* Bordes sutiles */
+.venta-tabla td {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Última fila sin borde inferior */
+.venta-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+.venta-tabla {
+    border: none;
+    color: #333;
+    font-size: 15px;
+}
+
+
+.button-pago {
+    margin-top: 400px;
+    margin-left: 400px;
+}
+
+.content-buttons {
+    position: fixed;       /* posición fija respecto a la ventana */
+    bottom: 20px;
+    left: 50%;             /* centrado horizontal */
+    transform: translateX(-50%); /* centra exactamente */
+    display: flex;
+    gap: 50px;             /* espacio entre botones */
+    z-index: 1000;
+}
+
+/* Estilo de botones y hover */
+.content-buttons button {
+    padding: 10px 20px;
+    background-color: burlywood;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.content-buttons button:hover {
+    background-color: lightgreen;
+}
+/* Fondo semi-transparente */
+.modal {
+    display: none; /* oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #1e1e1e;
+    color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    margin: 15% auto;
+    text-align: center;
+}
+
+/* Botones dentro del modal */
+.modal-buttons button {
+    margin: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#BtnPagos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#BtnPagos button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#BtnPagos button:hover {
+    background-color: #45a049;
+}
+#QRModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+#QRModal .modal-content {
+    background-color: #1e1e1e;
+    color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+#QRModal .modal-content h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+#QRModal .modal-content img {
+    width: 250px;
+    height: 250px;
+    border-radius: 8px;
+    background-color: white;
+    padding: 5px;
+}
+
+#btnCerrarQR {
+    margin-top: 10px;
+    background-color: #ff4c4c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+#btnCerrarQR:hover {
+    background-color: #e03a3a;
+}
+
+
+
+
+
+
+
+
+

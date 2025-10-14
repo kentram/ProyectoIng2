@@ -1,0 +1,61 @@
+<div class="inner-content">
+    <div id="manualModal" class="modal">
+        <div class="modal-content">
+            <h3>Ingresar código de barras</h3>
+            <input type="text" id="manualInput" placeholder="Ej: 7798138553019">
+            <div class="modal-buttons">
+                <button id="btnAceptarManual">Aceptar</button>
+                <button id="btnCancelarManual">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="borrarModal" class="modal">
+        <div class="modal-content">
+            <h3>Escanee código de barras a borrar</h3>
+            <input type="text" id="borrarInput" placeholder="Escanee el producto...">
+            <div class="modal-buttons">
+                <button id="btnCancelarBorrar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    <div id="PagarModal" class="modal">
+        <div class="modal-content">
+            <h3>Seleccione el medio ed pago</h3>
+            <div id ="BtnPagos">
+                <button id="btnPagoEfectivo">Efectivo</button>
+                <button id="btnPagoTarjeta">Tarjeta</button>
+                <button id="btnPagoQR">QR</button>
+            </div>
+        </div>
+    </div>
+    <div id="QRModal" class="modal">
+        <div class="modal-content">
+            <h3>Escanea el código QR para pagar</h3>
+            <img id="qrImage" src="" alt="QR Code" style="width: 250px; height: 250px;">
+            <button id="btnCerrarQR">Cerrar</button>
+        </div>
+    </div>
+    <h1 style="color: #f9f9f9">Registrar Venta</h1>
+    <table class="venta-tabla" id="ventaTabla">
+        <thead>
+        <tr>
+            <th>Barcode</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <input type="text" id="scannerInput" style="opacity:0; position:absolute; left:-1000px;">
+    <div class="content-buttons">
+        <button id="pago">Pagar</button>
+        <button id="manual">Agregar Manual</button>
+        <button id="borrar">Borrar Producto</button>
+        <script src="script.js"></script>
+    </div>
+</div>
