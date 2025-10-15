@@ -1,0 +1,106 @@
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    margin: 0;
+    padding: 40px;
+    color: #333;
+}
+
+h1 {
+    color: #00796b;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+label {
+    font-weight: 600;
+    color: #004d40;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 8px 10px;
+    border: 1px solid #b2dfdb;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #00796b;
+}
+
+button, input[type="submit"] {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #004d40;
+}
+
+#mainContent {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #e0f2f1;
+    border: 1px solid #b2dfdb;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 6px 0;
+}
+#btnListar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#btnListar:hover {
+    background-color: #45a049;
+}
+
+table {
+    margin-top: 15px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+}
