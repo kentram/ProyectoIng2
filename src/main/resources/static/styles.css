@@ -254,6 +254,20 @@ body {
 #btnCerrarQR:hover {
     background-color: #e03a3a;
 }
+#btnPagadoQR {
+    background-color: #4CAF50; /* verde */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+#btnPagadoQR:hover {
+    background-color: #3e8e41;
+}
 
 
 

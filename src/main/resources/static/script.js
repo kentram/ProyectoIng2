@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const qrModal = document.getElementById("QRModal");
         const qrImage = document.getElementById("qrImage");
         const btnCerrarQR = document.getElementById("btnCerrarQR");
+        const btnCerrarPagadoQR = document.getElementById("btnPagadoQR");
 
 
         if (botonPagar) {
@@ -74,6 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (btnCerrarQR) {
             btnCerrarQR.addEventListener("click", () => {
                 qrModal.style.display = "none";
+            });
+        }
+        if(btnCerrarPagadoQR){
+            btnCerrarPagadoQR.addEventListener("click",() =>{
+            registrarVenta();
+            qrModal.style.display = "none";
             });
         }
 
@@ -273,6 +280,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    function registrarVenta() {
+        const tabla = document.getElementById("ventaTabla");
+        const filas = tabla.querySelectorAll("tbody tr");
+        const productos = [];
+
+        filas.forEach(fila => {
+            const celdas = fila.querySelectorAll("td");
+            productos.push({
+                codigo: celdas[0].textContent,
+                nombre: celdas[1].textContent,
+                categoria: celdas[2].textContent,
+                precio: parseFloat(celdas[3].textContent.replace("$", "")),
+                cantidad: parseInt(celdas[4].textContent)
+            });
+        });
+
+        const totalVenta = productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
+        const venta = {
+            fecha: new Date().toISOString().split('T')[0],
+            total: totalVenta,
+            deudor: {id :null},
+            pago: {
+                medioPago: "QR",
+                total: totalVenta,
+                fecha: new Date().toISOString().split('T')[0]
+            },
+            items: productos
+        };
+
+        fetch("/productos/registrar-venta", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(venta)
+        })
+            .then(r => {
+                if (!r.ok) throw new Error("Error al registrar la venta");
+                return r.json();
+            })
+            .then(data => console.log("Venta registrada:", data))
+            .catch(err => console.error(err));
+    }
 
 
 

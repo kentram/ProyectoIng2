@@ -2,13 +2,14 @@ package ConnectionsDataBase;
 
 import Models.Categoria;
 import Models.Producto;
+import Models.Venta;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Random;
 
 public class QueriesDataBase {
 
@@ -42,4 +43,54 @@ public class QueriesDataBase {
             return null;
         }
     }
+    public static void registrarVenta(JdbcTemplate jdbcTemplate, Venta venta) {
+        Random random = new Random();
+        final int numero = random.nextInt(1000); // ID pago
+        final int numerox = random.nextInt(1000); // ID venta
+
+        String sqlPago = "INSERT INTO pagos (id_pago, medio_pago, total, fecha) VALUES (?, ?, ?, ?)";
+        String sqlVenta = "INSERT INTO ventas (id_venta, fecha, total, id_pago, id_deudor) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            // Insertar en pagos
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sqlPago, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, numero);
+                ps.setString(2, venta.getPago().getMedioPago());
+                ps.setFloat(3, venta.getPago().getTotal());
+                ps.setDate(4, java.sql.Date.valueOf(venta.getPago().getFecha()));
+                return ps;
+            });
+            System.out.println("✅ Pago registrado correctamente (ID " + numero + ")");
+        } catch (Exception e) {
+            System.err.println("❌ Error al registrar el pago: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        try {
+            // Insertar en ventas
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, numerox);
+                ps.setDate(2, java.sql.Date.valueOf(venta.getFecha()));
+                ps.setFloat(3, venta.getTotal());
+                ps.setInt(4, numero); // FK al pago
+
+                if (venta.getDeudor() != null && venta.getDeudor().getDni() != null) {
+                    ps.setInt(5, Integer.parseInt(venta.getDeudor().getDni()));
+                } else {
+                    ps.setNull(5, java.sql.Types.INTEGER);
+                }
+
+                return ps;
+            });
+            System.out.println("✅ Venta registrada correctamente (ID " + numerox + ")");
+
+        } catch (Exception e) {
+            System.err.println("❌ Error al registrar la venta: " + e.getMessage());
+            e.printStackTrace();
+        }
+        //Preguntar si luego le aosicio los items a la venta en la base de datos
+    }
+
 }
