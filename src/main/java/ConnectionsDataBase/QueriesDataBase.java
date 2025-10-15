@@ -1,6 +1,7 @@
 package ConnectionsDataBase;
 
 import Models.Categoria;
+import Models.Item;
 import Models.Producto;
 import Models.Venta;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -45,12 +46,12 @@ public class QueriesDataBase {
     }
     public static void registrarVenta(JdbcTemplate jdbcTemplate, Venta venta) {
         Random random = new Random();
-        final int numero = random.nextInt(1000); // ID pago
-        final int numerox = random.nextInt(1000); // ID venta
+        final int numero = random.nextInt(1000); // ID pago de momento hasta que la funcion del franco me genere el estado
 
         String sqlPago = "INSERT INTO pagos (id_pago, medio_pago, total, fecha) VALUES (?, ?, ?, ?)";
-        String sqlVenta = "INSERT INTO ventas (id_venta, fecha, total, id_pago, id_deudor) VALUES (?, ?, ?, ?, ?)";
-
+        String sqlVenta = "INSERT INTO ventas (fecha, total, id_pago, id_deudor) VALUES (?, ?, ?, ?)";
+        String sqlItemsVen = "INSERT INTO items_vendidos (id_venta, nombre, cantidad, precio_unitario,total) VALUES (?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         try {
             // Insertar en pagos
             jdbcTemplate.update(connection -> {
@@ -69,28 +70,49 @@ public class QueriesDataBase {
 
         try {
             // Insertar en ventas
-            jdbcTemplate.update(connection -> {
-                PreparedStatement ps = connection.prepareStatement(sqlVenta, Statement.RETURN_GENERATED_KEYS);
-                ps.setInt(1, numerox);
-                ps.setDate(2, java.sql.Date.valueOf(venta.getFecha()));
-                ps.setFloat(3, venta.getTotal());
-                ps.setInt(4, numero); // FK al pago
+            jdbcTemplate.update(connection -> {  //no numero la primera columna por que es SERIAL
+                PreparedStatement ps = connection.prepareStatement(sqlVenta, new String[] {"id_venta"});
+                ps.setDate(1, java.sql.Date.valueOf(venta.getFecha()));
+                ps.setFloat(2, venta.getTotal());
+                ps.setInt(3, numero); // FK al pago
 
                 if (venta.getDeudor() != null && venta.getDeudor().getDni() != null) {
-                    ps.setInt(5, Integer.parseInt(venta.getDeudor().getDni()));
+                    ps.setInt(4, Integer.parseInt(venta.getDeudor().getDni()));
                 } else {
-                    ps.setNull(5, java.sql.Types.INTEGER);
+                    ps.setNull(4, java.sql.Types.INTEGER);
                 }
 
                 return ps;
-            });
-            System.out.println("✅ Venta registrada correctamente (ID " + numerox + ")");
-
+            },keyHolder);
         } catch (Exception e) {
             System.err.println("❌ Error al registrar la venta: " + e.getMessage());
             e.printStackTrace();
         }
-        //Preguntar si luego le aosicio los items a la venta en la base de datos
+
+        int idVentaGenerado = ((Number) keyHolder.getKeys().get("id_venta")).intValue();
+        System.out.println("✅ Venta registrada correctamente (ID " + idVentaGenerado + ")");
+
+        try {
+            for (Item item : venta.getItems()) {
+                float total = item.getCantidad() * item.getPrecio();
+
+                jdbcTemplate.update(
+                        sqlItemsVen,
+                        idVentaGenerado,
+                        item.getNombre(),
+                        item.getCantidad(),
+                        item.getPrecio(),
+                        total
+                );
+            }
+
+            System.out.println("✅ Items vinculados correctamente a la venta (ID " + idVentaGenerado + ")");
+        } catch (Exception e) {
+            System.err.println("❌ Error al registrar los ítems de la venta: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
     }
 
 }
