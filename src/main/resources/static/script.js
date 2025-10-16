@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnPagoEfectivo.addEventListener("click", () => {
                 modalPago.style.display = "none";
                 console.log("Pago en efectivo seleccionado");
-                // Aquí podés llamar a la función de procesar pago efectivo
+                registrarVenta("EFECTIVO");
             });
         }
 
@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
             btnPagoTarjeta.addEventListener("click", () => {
                 modalPago.style.display = "none";
                 console.log("Pago con tarjeta seleccionado");
-                // Aquí podés abrir otra función o modal de tarjeta
             });
         }
 
@@ -79,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if(btnCerrarPagadoQR){
             btnCerrarPagadoQR.addEventListener("click",() =>{
-            registrarVenta();
+            registrarVenta("QR");
             qrModal.style.display = "none";
             });
         }
@@ -280,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    function registrarVenta() {
+    function registrarVenta(medioPago) {
         const tabla = document.getElementById("ventaTabla");
         const filas = tabla.querySelectorAll("tbody tr");
         const productos = [];
@@ -303,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
             total: totalVenta,
             deudor: {id :null},
             pago: {
-                medioPago: "QR",
+                medioPago: medioPago,
                 total: totalVenta,
                 fecha: new Date().toISOString().split('T')[0]
             },
