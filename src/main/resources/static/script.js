@@ -300,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const venta = {
             fecha: new Date().toISOString().split('T')[0],
             total: totalVenta,
-            deudor: {id :null},
+            deudor: null,
             pago: {
                 medioPago: medioPago,
                 total: totalVenta,
